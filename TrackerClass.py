@@ -2,11 +2,7 @@ import cv2 as cv
 
 class Tracker:
     sNumofObjects = 0
-    # biraz ileri aşamada dictionary'de sadece center tutmak yerine bounding box koordinatları da tutulabilir
     sCenterCoordinatesofObjects = dict()
-
-    def __init__(self):
-        pass
 
     def register(self, center):
         Tracker.sNumofObjects += 1

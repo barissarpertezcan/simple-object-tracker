@@ -7,6 +7,7 @@ if __name__ == "__main__":
 
     object_tracker = Tracker()
 
+    source = "exercise_video_cut.mp4"
     cap = cv.VideoCapture(0)
 
     if not cap.isOpened():
@@ -20,6 +21,8 @@ if __name__ == "__main__":
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
             break
+
+        frame = cv.resize(frame, (640, 480), cv.INTER_AREA)
         # Our operations on the frame come here
         gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         gray = cv.equalizeHist(gray)
