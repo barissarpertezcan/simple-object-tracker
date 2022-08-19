@@ -5,10 +5,16 @@ if __name__ == "__main__":
     path = "haarcascade_frontalface_default.xml"
     detector = cv.CascadeClassifier(path)
 
+    # Creating object_tracker instance from Tracker class
     object_tracker = Tracker()
 
-    source = "exercise_video_cut.mp4"
-    cap = cv.VideoCapture(0)
+    # make source 0 if you want to get feed from your camera/webcam
+    source = "videos/2_person_interview.mp4"
+    cap = cv.VideoCapture(source)
+
+    # Define the codec and create VideoWriter object
+    fourcc = cv.VideoWriter_fourcc(*'XVID')
+    out = cv.VideoWriter('results/output.avi', fourcc, 20.0, (640,  480))
 
     if not cap.isOpened():
         print("Cannot open camera")
@@ -40,10 +46,16 @@ if __name__ == "__main__":
                 center_list.append(center)
                 frame = cv.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
+            # Pass centers of detected objects to update centers function
             centerofobjects = object_tracker.update_centers(center_list)
             # print(centerofobjects)
             # print(Tracker.sNumofObjects)
+
+            # Pass current frame to mark centers of tracked objects
             object_tracker.draw_centers(frame)
+
+        # write the output frame
+        out.write(frame)
 
         # Display the resulting frame
         cv.imshow('frame', frame)
